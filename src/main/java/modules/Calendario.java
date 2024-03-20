@@ -53,6 +53,10 @@ public class Calendario {
         return this.fecha;
     }
 
+    /** setFecha
+     * Cambia la fecha actual del calendario
+     * @param fecha Fecha en el formato YYYY-MM
+     */
     public void setFecha(String fecha) {
         String datos[] = fecha.split("-");
         Calendar cal = Calendar.getInstance();
@@ -98,10 +102,9 @@ public class Calendario {
 
     private String getDays(){
         
-        Calendar cal = Calendar.getInstance(Locale.getDefault()); // Obtén una instancia de Calendar con la configuración regional predeterminada
+        Calendar cal = Calendar.getInstance(); // Obtén una instancia de Calendar con la configuración regional predeterminada
 
         cal.setTime(fecha); // Establece la fecha de tu interés
-        cal.setFirstDayOfWeek(Calendar.MONDAY); // Establece el primer día de la semana a lunes, por ejemplo
 
         // Ajusta la fecha al primer día del mes y reinicia la hora, minutos, segundos y milisegundos
         cal.set(Calendar.DAY_OF_MONTH, 1);
@@ -133,20 +136,14 @@ public class Calendario {
 
     @Override
     public String toString() {
-        Calendar calAnt = Calendar.getInstance();
-        calAnt.setTime(fecha);
-        calAnt.add(Calendar.MONTH, -1);
-        Calendar calSig = Calendar.getInstance();
-        calSig.setTime(fecha);
-        calSig.add(Calendar.MONTH, 1);
         
-        return String.format("<div class=\"calendar\">"+
+        return String.format(
+                      "<div class=\"calendar\">"+
                        "<div class=\"calendar-header\">"+
                         "<div class=\"btn-group\" role=\"group\">"+
                             "<form method=\"POST\" action=\"index.jsp\">"+
                                 "<input type=\"hidden\" name=\"fecha\" value=\"%s\">"+
                                 "<button type=\"submit\" class=\"btn btn-secondary rounded-left-only\">"+
-                                    "<i class=\"bi bi-chevron-left\"></i>"+
                                     "<span aria-hidden=\"true\">&larr;</span>"+
                                 "</button>"+
                             "</form>"+
@@ -176,6 +173,7 @@ public class Calendario {
                          "<div>Domingo</div>"+
                        "</div>"+
                        "<div class=\"days\">"+
-                       "%s</div>", getFechaAnt(), getFechaSig(), getFechaHoy(), getMes(fecha), getAnio(fecha), getDays());
+                       "%s"+
+                      "</div>", getFechaAnt(), getFechaSig(), getFechaHoy(), getMes(fecha), getAnio(fecha), getDays());
     }
 }
